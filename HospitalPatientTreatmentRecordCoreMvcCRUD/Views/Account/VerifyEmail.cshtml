@@ -1,0 +1,46 @@
+﻿@using HospitalPatientTreatmentRecordCoreMvcCRUD.Models.ViewModels;
+@model VerifyEmailViewModel;
+
+@{
+    ViewData["Title"] = "Verify Email";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="account-container d-flex justify-content-center align-items-center" style="min-height:100vh;">
+    <div class="account-box shadow p-4 rounded-4"
+         style="width:100%; max-width:380px; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(6px);">
+
+        <h4 class="text-center fw-bold mb-3 text-primary">
+            <i class="fas fa-envelope-open-text me-2"></i> Verify Email
+        </h4>
+
+        <form asp-action="VerifyEmail" method="post" class="needs-validation" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <!-- Email -->
+            <div class="form-floating mb-3">
+                <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                <label asp-for="Email"><i class="fas fa-envelope me-2 text-secondary"></i> Email</label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-success w-100 py-2 fs-6 rounded-pill">
+                <i class="fas fa-check-circle me-2"></i> Verify
+            </button>
+
+            <!-- Back -->
+            <div class="text-center mt-3">
+                <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-secondary small">
+                    <i class="fas fa-arrow-left me-1"></i> Back
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}

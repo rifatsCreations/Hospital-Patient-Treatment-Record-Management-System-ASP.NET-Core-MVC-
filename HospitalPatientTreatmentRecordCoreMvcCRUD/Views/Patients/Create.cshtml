@@ -1,0 +1,122 @@
+﻿@using HospitalPatientTreatmentRecordCoreMvcCRUD.Models.ViewModels
+@model PatientViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm">
+                <div class="card-header text-center bg-success text-white">
+                    <h4 class="mb-0">Create New Patient</h4>
+                </div>
+                <div class="card-body">
+                    <form id="createForm" asp-action="Create" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="PatientName" class="form-label"></label>
+                                    <input asp-for="PatientName" class="form-control" />
+                                    <span asp-validation-for="PatientName" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="AdmitDate" class="form-label"></label>
+                                    <input asp-for="AdmitDate" class="form-control" />
+                                    <span asp-validation-for="AdmitDate" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="ContactNumber" class="form-label"></label>
+                                    <input asp-for="ContactNumber" class="form-control" />
+                                    <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="Address" class="form-label"></label>
+                                    <input asp-for="Address" class="form-control" />
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" asp-for="IsAdmitted" />
+                                    <label class="form-check-label">@Html.DisplayNameFor(model => model.IsAdmitted)</label>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label asp-for="TreatmentTypeId" class="form-label"></label>
+                                    <select class="form-control" asp-for="TreatmentTypeId" asp-items="@(new SelectList(Model.TreatmentTypes, "TreatmentTypeId", "TreatmentTypeName"))">
+                                        <option value="0">Select Treatment Type</option>
+                                    </select>
+                                    <span asp-validation-for="TreatmentTypeId" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="ProfileFile" class="form-label">Profile Image</label><br />
+                                    <input name="ProfileFile" id="ProfileFile" type="file" class="form-control" onchange="readUrl(this)" />
+                                    <img id="imageFile" src="~/images/noimage.jpg" class="img-thumbnail mt-2" style="width: 125px; height: 125px;" />
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <div class="mb-2 d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Treatment Details</h5>
+                                    <button type="button" class="btn btn-sm btn btn-outline-dark" onclick="AddDetails()">+ Add</button>
+                                </div>
+                                <div id="treatmentDetailsContainer">
+                                    @Html.Partial("_TreatmentDetailsTable", Model.TreatmentDetails)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <a asp-action="Index" asp-controller="Patients" class="btn btn-secondary ms-2">Back To List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function readUrl(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imageFile').attr('src', e.target.result).show();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function DeleteItem(btn) {
+        $(btn).closest('tr').remove();
+    }
+
+    function AddDetails() {
+        var lastRowIndex = parseInt($("#LastIndex").val());
+
+        var newRow = `
+            <tr>
+                <td>
+                    <input type="text" class="form-control" name="TreatmentDetails[${lastRowIndex}].TreatmentName" />
+                </td>
+                <td>
+                    <input type="number" class="form-control" name="TreatmentDetails[${lastRowIndex}].Cost" />
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="DeleteItem(this)">Remove</button>
+                </td>
+            </tr>`;
+
+        $("#Exptable tbody").append(newRow);
+        $("#LastIndex").val(lastRowIndex + 1);
+    }
+</script>

@@ -1,0 +1,104 @@
+/*  Box-sizing reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*  Responsive base font */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/*  Bootstrap focus ring */
+.btn:focus, .btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/*  Hero section only for Home */
+.hero-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: url('/images/home-bg.jpg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+    .hero-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1;
+    }
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+    .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+
+/*  Fixed transparent footer */
+.footer-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background: transparent;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 9999;
+    user-select: none;
+}
+
+/* Make homepage non-scrollable */
+body.home-page {
+    overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .footer-fixed {
+        font-size: 0.8rem;
+        padding: 8px 0;
+    }
+}

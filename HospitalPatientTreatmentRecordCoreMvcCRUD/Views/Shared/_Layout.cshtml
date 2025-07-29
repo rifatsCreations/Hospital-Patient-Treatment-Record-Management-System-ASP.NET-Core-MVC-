@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - New Life Hospital</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+          integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CRUDWithIdentity.styles.css" asp-append-version="true" />
+
+    <style>
+        .navbar-dark.bg-ash {
+            background-color: #2F4F4F;
+        }
+    </style>
+</head>
+<body class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "home-page" : "")">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-ash">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-action="Index" asp-controller="Home">Home</a>
+                    </li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-action="Index" asp-controller="Patients">Patient</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-action="Index" asp-controller="TreatmentType">Treatment Type</a>
+                        </li>
+                    }
+                </ul>
+                <!-- Right-side login -->
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main body -->
+   
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    
+
+    <!-- Footer -->
+    <footer class="footer-fixed">
+        &copy; 2025 - New Life Hospital
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/jquery/dist/jquery.min.js"></script>
+    <script src="~/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
